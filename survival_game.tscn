@@ -1,0 +1,95 @@
+[gd_scene load_steps=5 format=3 uid="uid://b47tam04igpea"]
+
+[ext_resource type="Script" path="res://survival_game.gd" id="1_ca28g"]
+[ext_resource type="PackedScene" uid="uid://qc8jm8fsie4t" path="res://player.tscn" id="1_udcg2"]
+[ext_resource type="PackedScene" uid="uid://3oug3yku7cyf" path="res://pine_tree.tscn" id="2_rqhiq"]
+
+[sub_resource type="Curve2D" id="Curve2D_yeuav"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -66, -88, 0, 0, 0, 0, 2012, -90, 0, 0, 0, 0, 2014, 1170, 0, 0, 0, 0, -65, 1166, 0, 0, 0, 0, -66, -88)
+}
+point_count = 5
+
+[node name="Game" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_ca28g")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 1918.0
+offset_bottom = 1078.0
+
+[node name="Player" parent="." instance=ExtResource("1_udcg2")]
+position = Vector2(959, 492)
+
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-959, -492)
+curve = SubResource("Curve2D_yeuav")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(-66, -88)
+rotation = -0.000962464
+
+[node name="PineTree" parent="." instance=ExtResource("2_rqhiq")]
+position = Vector2(251, 362)
+
+[node name="PineTree2" parent="." instance=ExtResource("2_rqhiq")]
+position = Vector2(766, 960)
+
+[node name="PineTree3" parent="." instance=ExtResource("2_rqhiq")]
+position = Vector2(1631, 237)
+
+[node name="PineTree4" parent="." instance=ExtResource("2_rqhiq")]
+position = Vector2(1589, 717)
+
+[node name="PineTree5" parent="." instance=ExtResource("2_rqhiq")]
+position = Vector2(1544, 212)
+
+[node name="PineTree6" parent="." instance=ExtResource("2_rqhiq")]
+position = Vector2(1700, 171)
+
+[node name="MobSpawn" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.568627)
+
+[node name="Label" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -173.0
+offset_top = -68.5
+offset_right = 173.0
+offset_bottom = 68.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 100
+text = "Perdeu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PowerUp" type="Timer" parent="."]
+unique_name_in_owner = true
+autostart = true
+
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
+[connection signal="powerup" from="Player" to="." method="_on_player_powerup"]
+[connection signal="timeout" from="MobSpawn" to="." method="_on_mob_spawn_timeout"]
+[connection signal="timeout" from="PowerUp" to="." method="_on_power_up_timeout"]
