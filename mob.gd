@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-var health = 3.0
+var health = 1.0
 var player 
 
 func _ready():

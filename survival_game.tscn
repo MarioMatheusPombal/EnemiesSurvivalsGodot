@@ -89,7 +89,31 @@ vertical_alignment = 1
 unique_name_in_owner = true
 autostart = true
 
+[node name="Pontuacao" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Pontos" type="Label" parent="HUD"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -18.0
+offset_top = 32.0
+offset_right = 22.0
+offset_bottom = 87.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="powerup" from="Player" to="." method="_on_player_powerup"]
 [connection signal="timeout" from="MobSpawn" to="." method="_on_mob_spawn_timeout"]
 [connection signal="timeout" from="PowerUp" to="." method="_on_power_up_timeout"]
+[connection signal="timeout" from="Pontuacao" to="." method="_on_pontuacao_timeout"]
